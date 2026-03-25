@@ -476,4 +476,6 @@ elif uploaded_file is not None and option == "E-Commerce (RFM)":
         mime='text/csv'
     )
 else:
-    st.warning("Please upload a dataset")
+    st.info("Using default dataset")
+    data = pd.read_csv("https://github.com/meermansubdar/customer-segmentation-ml/tree/main/data/Mall_Customers.csv")
+    #st.warning("Please upload a dataset")
