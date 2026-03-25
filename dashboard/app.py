@@ -23,7 +23,7 @@ uploaded_file = st.file_uploader("Upload Customer Dataset:", type=["csv"])
 
 #if uploaded_file is not None:
 if uploaded_file is not None and option == "Mall Customers":
-    data = pd.read_csv(uploaded_file)
+    data = pd.read_csv(uploaded_file, encoding='latin1')
 
     st.subheader("Dataset Preview")
     st.dataframe(data.head())
@@ -33,6 +33,9 @@ if uploaded_file is not None and option == "Mall Customers":
         data['Gender'] = data['Gender'].map({'Male': 0, 'Female': 1})
 
     features = data[['Age','Annual Income (k$)','Spending Score (1-100)']]
+    if not all(col in data.columns for col in features):
+        st.error("Dataset format incorrect!")
+        st.stop()
 
     scaler = StandardScaler()
     scaled = scaler.fit_transform(features)
@@ -46,7 +49,7 @@ if uploaded_file is not None and option == "Mall Customers":
     K_range = range(1, 11)
 
     for i in K_range:
-        kmeans = KMeans(n_clusters=i, random_state=42)
+        kmeans = KMeans(n_clusters=i, random_state=42, n_init=10)
         kmeans.fit(scaled)
         wcss.append(kmeans.inertia_)
 
@@ -472,3 +475,5 @@ elif uploaded_file is not None and option == "E-Commerce (RFM)":
         file_name='filtered_customers.csv',
         mime='text/csv'
     )
+else:
+    st.warning("Please upload a dataset")
