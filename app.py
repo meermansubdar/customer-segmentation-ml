@@ -422,7 +422,7 @@ try:
         # ax_bar.set_ylabel("Number of Customers")
         # ax_bar.set_title("Customer Segments Count")
         #
-        # st.pyplot(fig_bar)
+        # st.pyplot(fig_bar) to be deleted
 
         # Enhanced Bar
         #st.subheader("Segment Comparison")
